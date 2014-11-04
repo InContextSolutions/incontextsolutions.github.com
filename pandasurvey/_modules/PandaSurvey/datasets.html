@@ -1,0 +1,265 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PandaSurvey.datasets &mdash; PandaSurvey 0.100 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="PandaSurvey 0.100 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../index.html" class="fa fa-home"> PandaSurvey</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../GettingStarted.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../GettingStarted.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../GettingStarted.html#basic-usage">Basic Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../PandaSurvey.html">PandaSurvey package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../PandaSurvey.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../PandaSurvey.html#module-PandaSurvey.base">PandaSurvey.base module</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">PandaSurvey</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>PandaSurvey.datasets</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for PandaSurvey.datasets</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;PandaSurvey includes two unique datasets for testing purpuses: `People` and a sample study. The `People` file is from the 2010 US Census. The sample study is from a small survey performed at InContext Solutions in 2014 (specific survey details withheld)&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+
+
+<span class="k">def</span> <span class="nf">_path</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">root</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="load_people"><a class="viewcode-back" href="../../PandaSurvey.datasets.html#PandaSurvey.datasets.load_people">[docs]</a><span class="k">def</span> <span class="nf">load_people</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Returns the `People` dataset as a DataFrame. The data consists of 9999 individuals with age, disability status, marital status, race, and gender demographic information. Columns and their codes are described below:</span>
+
+<span class="sd">    - Age</span>
+<span class="sd">        - Non-negative integer</span>
+<span class="sd">        - May include zeros</span>
+<span class="sd">    - Disability</span>
+<span class="sd">        - 1: Disabled</span>
+<span class="sd">        - 2: Not disabled</span>
+<span class="sd">    - MarritalStatus</span>
+<span class="sd">        - 1: Married</span>
+<span class="sd">        - 2: Widowed</span>
+<span class="sd">        - 3: Divorced</span>
+<span class="sd">        - 4: Separated</span>
+<span class="sd">        - 5: Never married or under 15 years old</span>
+<span class="sd">    - Race</span>
+<span class="sd">        - 1: White alone</span>
+<span class="sd">        - 2: Black or African American alone</span>
+<span class="sd">        - 3: American Indian alone</span>
+<span class="sd">        - 4: Alaska Native alone</span>
+<span class="sd">        - 5: American Indian and Alaska Native tribes specified; or American Indian or Alaska native, not specified and no other races</span>
+<span class="sd">        - 6: Asian alone</span>
+<span class="sd">        - 7: Native Hawaiian and Other Pacific Islander alone</span>
+<span class="sd">        - 8: Some other race alone</span>
+<span class="sd">        - 9: Two or more major race groups</span>
+<span class="sd">    - Gender</span>
+<span class="sd">        - 1: Male</span>
+<span class="sd">        - 2: Female</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">_path</span><span class="p">(</span><span class="s">&quot;People.csv&quot;</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="load_sample_study"><a class="viewcode-back" href="../../PandaSurvey.datasets.html#PandaSurvey.datasets.load_sample_study">[docs]</a><span class="k">def</span> <span class="nf">load_sample_study</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Returns a sample dataset describing demographics in coded format from 2092 respondents. The study consists of 7 cells and demographics considered include age, gender, income, hispanic, and race.&quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">_path</span><span class="p">(</span><span class="s">&quot;SampleStudy.csv&quot;</span><span class="p">))</span>
+    <span class="k">del</span> <span class="n">df</span><span class="p">[</span><span class="s">&#39;Weight&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">df</span>
+
+</div>
+<div class="viewcode-block" id="load_sample_weights"><a class="viewcode-back" href="../../PandaSurvey.datasets.html#PandaSurvey.datasets.load_sample_weights">[docs]</a><span class="k">def</span> <span class="nf">load_sample_weights</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Returns individual weights from the sample survey calculated via a raking method previously implemented in R.&quot;&quot;&quot;</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">_path</span><span class="p">(</span><span class="s">&quot;SampleStudy.csv&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">df</span><span class="p">[</span><span class="s">&#39;Weight&#39;</span><span class="p">]</span>
+
+</div>
+<div class="viewcode-block" id="load_sample_proportions"><a class="viewcode-back" href="../../PandaSurvey.datasets.html#PandaSurvey.datasets.load_sample_proportions">[docs]</a><span class="k">def</span> <span class="nf">load_sample_proportions</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Returns the target sample proportions that correspond to the sample survey.</span>
+
+<span class="sd">    +-------------+-------------+-------------------+</span>
+<span class="sd">    | Demographic | Coded Value | Target Proportion |</span>
+<span class="sd">    +=============+=============+===================+</span>
+<span class="sd">    | Age         | 1           | 0.07              |</span>
+<span class="sd">    +-------------+-------------+-------------------+</span>
+<span class="sd">    | Age         | 2           | 0.22              |</span>
+<span class="sd">    +-------------+-------------+-------------------+</span>
+<span class="sd">    | Age         | 3           | 0.2               |</span>
+<span class="sd">    +-------------+-------------+-------------------+</span>
+<span class="sd">    | Age         | 4           | 0.2               |</span>
+<span class="sd">    +-------------+-------------+-------------------+</span>
+<span class="sd">    | Age         | 5           | 0.21              |</span>
+<span class="sd">    +-------------+-------------+-------------------+</span>
+<span class="sd">    | Gender      | 1           | 0.5               |</span>
+<span class="sd">    +-------------+-------------+-------------------+</span>
+<span class="sd">    | Gender      | 2           | 0.5               |</span>
+<span class="sd">    +-------------+-------------+-------------------+</span>
+<span class="sd">    | Income      | 1           | 0.17              |</span>
+<span class="sd">    +-------------+-------------+-------------------+</span>
+<span class="sd">    | Income      | 2           | 0.21              |</span>
+<span class="sd">    +-------------+-------------+-------------------+</span>
+<span class="sd">    | Income      | 3           | 0.25              |</span>
+<span class="sd">    +-------------+-------------+-------------------+</span>
+<span class="sd">    | Income      | 4           | 0.16              |</span>
+<span class="sd">    +-------------+-------------+-------------------+</span>
+<span class="sd">    | Income      | 5           | 0.11              |</span>
+<span class="sd">    +-------------+-------------+-------------------+</span>
+<span class="sd">    | Hispanic    | 1           | 0.09              |</span>
+<span class="sd">    +-------------+-------------+-------------------+</span>
+<span class="sd">    | Hispanic    | 2           | 0.91              |</span>
+<span class="sd">    +-------------+-------------+-------------------+</span>
+<span class="sd">    | Race        | 0           | 0.15              |</span>
+<span class="sd">    +-------------+-------------+-------------------+</span>
+<span class="sd">    | Race        | 1           | 0.85              |</span>
+<span class="sd">    +-------------+-------------+-------------------+</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">weights</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">_path</span><span class="p">(</span><span class="s">&quot;SampleWeights.csv&quot;</span><span class="p">))</span> <span class="k">as</span> <span class="n">csv_in</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">csv_in</span><span class="p">:</span>
+            <span class="n">demo</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">proportion</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">demo</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">weights</span><span class="p">:</span>
+                <span class="n">weights</span><span class="p">[</span><span class="n">demo</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">weights</span><span class="p">[</span><span class="n">demo</span><span class="p">][</span><span class="nb">int</span><span class="p">(</span><span class="n">category</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">proportion</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">weights</span></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, InContext Solutions.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.100',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
