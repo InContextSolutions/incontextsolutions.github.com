@@ -1,4 +1,4 @@
-incontextsolutions.github.com
-=============================
+incontextsolutions.github.io
+============================
 
 Github Homepage
