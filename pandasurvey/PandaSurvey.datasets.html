@@ -1,0 +1,336 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PandaSurvey.datasets package &mdash; PandaSurvey 0.100 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="PandaSurvey 0.100 documentation" href="index.html"/>
+        <link rel="up" title="PandaSurvey package" href="PandaSurvey.html"/>
+        <link rel="next" title="PandaSurvey.rake package" href="PandaSurvey.rake.html"/>
+        <link rel="prev" title="PandaSurvey package" href="PandaSurvey.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> PandaSurvey</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="PandaSurvey.html">PandaSurvey package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="PandaSurvey.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PandaSurvey.html#module-PandaSurvey.base">PandaSurvey.base module</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">PandaSurvey</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="PandaSurvey.html">PandaSurvey package</a> &raquo;</li>
+      
+    <li>PandaSurvey.datasets package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/PandaSurvey.datasets.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="pandasurvey-datasets-package">
+<h1>PandaSurvey.datasets package<a class="headerlink" href="#pandasurvey-datasets-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-PandaSurvey.datasets">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-PandaSurvey.datasets" title="Permalink to this headline">¶</a></h2>
+<p>PandaSurvey includes two unique datasets for testing purpuses: <cite>People</cite> and a sample study. The <cite>People</cite> file is from the 2010 US Census. The sample study is from a small survey performed at InContext Solutions in 2014 (specific survey details withheld)</p>
+<dl class="function">
+<dt id="PandaSurvey.datasets.load_people">
+<tt class="descclassname">PandaSurvey.datasets.</tt><tt class="descname">load_people</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PandaSurvey/datasets.html#load_people"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PandaSurvey.datasets.load_people" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the <cite>People</cite> dataset as a DataFrame. The data consists of 9999 individuals with age, disability status, marital status, race, and gender demographic information. Columns and their codes are described below:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Age</dt>
+<dd><ul class="first last simple">
+<li>Non-negative integer</li>
+<li>May include zeros</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Disability</dt>
+<dd><ul class="first last simple">
+<li>1: Disabled</li>
+<li>2: Not disabled</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>MarritalStatus</dt>
+<dd><ul class="first last simple">
+<li>1: Married</li>
+<li>2: Widowed</li>
+<li>3: Divorced</li>
+<li>4: Separated</li>
+<li>5: Never married or under 15 years old</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Race</dt>
+<dd><ul class="first last simple">
+<li>1: White alone</li>
+<li>2: Black or African American alone</li>
+<li>3: American Indian alone</li>
+<li>4: Alaska Native alone</li>
+<li>5: American Indian and Alaska Native tribes specified; or American Indian or Alaska native, not specified and no other races</li>
+<li>6: Asian alone</li>
+<li>7: Native Hawaiian and Other Pacific Islander alone</li>
+<li>8: Some other race alone</li>
+<li>9: Two or more major race groups</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Gender</dt>
+<dd><ul class="first last simple">
+<li>1: Male</li>
+<li>2: Female</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="PandaSurvey.datasets.load_sample_proportions">
+<tt class="descclassname">PandaSurvey.datasets.</tt><tt class="descname">load_sample_proportions</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PandaSurvey/datasets.html#load_sample_proportions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PandaSurvey.datasets.load_sample_proportions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the target sample proportions that correspond to the sample survey.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="29%" />
+<col width="42%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Demographic</th>
+<th class="head">Coded Value</th>
+<th class="head">Target Proportion</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Age</td>
+<td>1</td>
+<td>0.07</td>
+</tr>
+<tr class="row-odd"><td>Age</td>
+<td>2</td>
+<td>0.22</td>
+</tr>
+<tr class="row-even"><td>Age</td>
+<td>3</td>
+<td>0.2</td>
+</tr>
+<tr class="row-odd"><td>Age</td>
+<td>4</td>
+<td>0.2</td>
+</tr>
+<tr class="row-even"><td>Age</td>
+<td>5</td>
+<td>0.21</td>
+</tr>
+<tr class="row-odd"><td>Gender</td>
+<td>1</td>
+<td>0.5</td>
+</tr>
+<tr class="row-even"><td>Gender</td>
+<td>2</td>
+<td>0.5</td>
+</tr>
+<tr class="row-odd"><td>Income</td>
+<td>1</td>
+<td>0.17</td>
+</tr>
+<tr class="row-even"><td>Income</td>
+<td>2</td>
+<td>0.21</td>
+</tr>
+<tr class="row-odd"><td>Income</td>
+<td>3</td>
+<td>0.25</td>
+</tr>
+<tr class="row-even"><td>Income</td>
+<td>4</td>
+<td>0.16</td>
+</tr>
+<tr class="row-odd"><td>Income</td>
+<td>5</td>
+<td>0.11</td>
+</tr>
+<tr class="row-even"><td>Hispanic</td>
+<td>1</td>
+<td>0.09</td>
+</tr>
+<tr class="row-odd"><td>Hispanic</td>
+<td>2</td>
+<td>0.91</td>
+</tr>
+<tr class="row-even"><td>Race</td>
+<td>0</td>
+<td>0.15</td>
+</tr>
+<tr class="row-odd"><td>Race</td>
+<td>1</td>
+<td>0.85</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="PandaSurvey.datasets.load_sample_study">
+<tt class="descclassname">PandaSurvey.datasets.</tt><tt class="descname">load_sample_study</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PandaSurvey/datasets.html#load_sample_study"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PandaSurvey.datasets.load_sample_study" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a sample dataset describing demographics in coded format from 2092 respondents. The study consists of 7 cells and demographics considered include age, gender, income, hispanic, and race.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PandaSurvey.datasets.load_sample_weights">
+<tt class="descclassname">PandaSurvey.datasets.</tt><tt class="descname">load_sample_weights</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PandaSurvey/datasets.html#load_sample_weights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PandaSurvey.datasets.load_sample_weights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns individual weights from the sample survey calculated via a raking method previously implemented in R.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="PandaSurvey.rake.html" class="btn btn-neutral float-right" title="PandaSurvey.rake package"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="PandaSurvey.html" class="btn btn-neutral" title="PandaSurvey package"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, InContext Solutions.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.100',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

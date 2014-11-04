@@ -1,0 +1,232 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PandaSurvey.rake.simple &mdash; PandaSurvey 0.100 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="PandaSurvey 0.100 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../../index.html" class="fa fa-home"> PandaSurvey</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../GettingStarted.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../GettingStarted.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../GettingStarted.html#basic-usage">Basic Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../PandaSurvey.html">PandaSurvey package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../PandaSurvey.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../PandaSurvey.html#module-PandaSurvey.base">PandaSurvey.base module</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">PandaSurvey</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>PandaSurvey.rake.simple</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for PandaSurvey.rake.simple</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">from</span> <span class="nn">PandaSurvey.base</span> <span class="kn">import</span> <span class="n">SurveyWeightBase</span>
+
+
+<span class="n">BIG_M</span> <span class="o">=</span> <span class="mi">99</span>
+<span class="n">EPSILON</span> <span class="o">=</span> <span class="mf">1e-3</span>
+<span class="n">MAX_ITER</span> <span class="o">=</span> <span class="mi">1000</span>
+
+
+<div class="viewcode-block" id="SimpleRake"><a class="viewcode-back" href="../../../PandaSurvey.rake.html#PandaSurvey.rake.simple.SimpleRake">[docs]</a><span class="k">class</span> <span class="nc">SimpleRake</span><span class="p">(</span><span class="n">SurveyWeightBase</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;Rake weighting implementation.</span>
+
+<span class="sd">    :param pandas.DataFrame df: The observations to be weighted.</span>
+<span class="sd">    :param dict proportions: A dictionary of the target proportions for each demographic and response.</span>
+<span class="sd">    :param float epsilon: Convergence threshold for the raking procedure.</span>
+<span class="sd">    :param int maxiter: Maximum number of iterations for the raking procedure.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">proportions</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="n">EPSILON</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">MAX_ITER</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rows</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proportions</span> <span class="o">=</span> <span class="n">proportions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">demos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proportions</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="n">epsilon</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span> <span class="o">=</span> <span class="n">maxiter</span>
+
+<div class="viewcode-block" id="SimpleRake.calc"><a class="viewcode-back" href="../../../PandaSurvey.rake.html#PandaSurvey.rake.simple.SimpleRake.calc">[docs]</a>    <span class="k">def</span> <span class="nf">calc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">use_l2</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculates individual weights.</span>
+
+<span class="sd">        :param boolean use_l2: Determines if convergence is measured using the L2 norm of the change in weights. By default, the L1 norm is used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">warning_state</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">chained_assignment</span>
+        <span class="n">pandas</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">chained_assignment</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">BIG_M</span>
+        <span class="n">delta0</span> <span class="o">=</span> <span class="n">BIG_M</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">num_iters</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">new_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">new_df</span><span class="p">[</span><span class="s">&#39;weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">mass</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">var</span><span class="p">])</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">proportions</span><span class="p">[</span><span class="n">var</span><span class="p">][</span><span class="n">value</span><span class="p">]</span> <span class="o">*</span> <span class="n">row</span><span class="p">[</span><span class="s">&#39;weight&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">mass</span><span class="p">[</span><span class="n">value</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">while</span> <span class="n">delta</span> <span class="o">&lt;</span> <span class="n">delta0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span> <span class="ow">and</span> <span class="n">num_iters</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxiter</span><span class="p">:</span>
+                <span class="n">wt</span> <span class="o">=</span> <span class="n">new_df</span><span class="p">[</span><span class="s">&#39;weight&#39;</span><span class="p">]</span>
+
+                <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">proportions</span><span class="p">:</span>
+                    <span class="n">mass</span> <span class="o">=</span> <span class="p">{</span><span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">group</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()[</span><span class="s">&#39;weight&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">new_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">var</span><span class="p">)}</span>
+                    <span class="n">sub_df</span> <span class="o">=</span> <span class="n">new_df</span><span class="p">[</span><span class="n">new_df</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proportions</span><span class="p">[</span><span class="n">var</span><span class="p">])]</span>
+                    <span class="n">sub_df</span><span class="p">[</span><span class="s">&#39;weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_update</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mass</span><span class="o">=</span><span class="n">mass</span><span class="p">)</span>
+                    <span class="n">new_df</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">sub_df</span><span class="p">)</span>
+
+                <span class="n">delta0</span> <span class="o">=</span> <span class="n">delta</span>
+
+                <span class="k">if</span> <span class="n">use_l2</span><span class="p">:</span>
+                    <span class="n">delta</span> <span class="o">=</span> <span class="p">((</span><span class="n">new_df</span><span class="p">[</span><span class="s">&#39;weight&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">wt</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">delta</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_df</span><span class="p">[</span><span class="s">&#39;weight&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">wt</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+                <span class="n">num_iters</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">pandas</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">chained_assignment</span> <span class="o">=</span> <span class="n">warning_state</span>
+
+        <span class="n">new_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">demos</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">demos</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_df</span></div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, InContext Solutions.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.100',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
